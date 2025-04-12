@@ -84,7 +84,28 @@ async def search_documents(q : str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error searching documents: {str(e)}")
         
-
+@app.get("/list-documents")
+async def list_documents():
+    try:
+        # Query to fetch all documents
+        query = {"query": {"match_all": {}}}
+        
+        response = es.search(index=INDEX_NAME, body=query, size=1000)  # Fetch up to 1000 documents
+        results = [
+            {
+                "filename": hit["_source"]["filename"],
+                "text": hit["_source"]["text"][:200]  # Show a snippet of the text
+            }
+            for hit in response["hits"]["hits"]
+        ]
+        
+        if not results:
+            return {"message": "No documents found"}
+        
+        return {"documents": results}
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error listing documents: {str(e)}")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
