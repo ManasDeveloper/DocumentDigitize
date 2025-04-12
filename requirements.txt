@@ -7,3 +7,4 @@ pytesseract>=0.3.13
 python-multipart>=0.0.20
 streamlit>=1.44.1
 uvicorn>=0.34.0
+tesseract
