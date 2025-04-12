@@ -1,4 +1,4 @@
-"dotenv>=0.9.9"
+"python-dotenv>=0.9.9"
 "elasticsearch>=8.17.2"
 "fastapi>=0.115.12"
 "pillow>=11.1.0"
